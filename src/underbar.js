@@ -99,6 +99,21 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+  	var uniqArray = [];
+  	// look at array and grab element
+  	for (var i = 0; i < array.length; i++) {
+  	  // scan through the uniq array and check if it matches
+  	  var isUnique = true;
+  	  for (var j = 0; j < uniqArray.length; j++) {
+        if (array[i] === uniqArray[j]) {
+        	isUnique = false;
+        }
+  	  }
+  	  if (isUnique) {
+        uniqArray.push(array[i]);
+  	  }
+  	}
+  	return uniqArray;
   };
 
 
