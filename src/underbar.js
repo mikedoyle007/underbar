@@ -168,23 +168,59 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-  	var reduced = [];
-  	var memo = accumulator;
-  	if (memo === undefined) {
-  	  memo = collection[0];
-  	  // when accumulator is not passed in
-  	  for (var i = 1; i < collection.length; i++) {
-        memo = iterator(memo, collection[i]); 
-  	  }	
-  	  reduced = memo;
-  	} else {
-  	  // when accumulator is passed in	
-  	  for (var i = 0; i < collection.length; i++) {
-        memo = iterator(memo, collection[i]);
-	  }
-	  reduced = memo;
+  	
+    var reduced;
+    /*******************************************************/
+    // arrays
+    if (Array.isArray(collection)) {
+      if (accumulator === undefined) {
+        accumulator = collection[0];
+        // when accumulator is not passed in
+        for (var i = 1; i < collection.length; i++) {
+          accumulator = iterator(accumulator, collection[i]); 
+          console.log('current item = ' + collection[i]);
+        } 
+        reduced = accumulator;
+     } else if (accumulator !== undefined) {
+        // when accumulator is passed in  
+        for (var i = 0; i < collection.length; i++) {
+          accumulator = iterator(accumulator, collection[i]);
+          console.log('current item = ' + collection[i]);
+        }
+      }
+      reduced = accumulator;
+    } else {
+    /*******************************************************/
+    // objects
+      // if accumulator is not passed in
+      if (accumulator === undefined) {
+        // accumulator = /* SOMETHING */;
+        for (var prop in collection) {
+          accumulator = collection[prop];
+          break;
+        }
+        var counter = 0;
+        for (var prop in collection) {
+          counter++;
+          // skip over first property in collection
+          if (counter > 1) {
+            accumulator = iterator(accumulator, collection[prop]);
+            console.log('prop = ' + prop);
+            console.log('current obj item = ' + collection[prop]);
+          }
+        }
+        reduced = accumulator;
+      } else {
+        // when accumulator is passed in
+        for (var prop in collection) {
+          accumulator = iterator(accumulator, collection[prop]);
+          console.log('prop = ' + prop);
+          console.log('current obj item = ' + collection[prop]);
+        }
+        reduced = accumulator;
+      }
     }
-  	return reduced;	
+    return reduced;
   };
 
   // Determine if the array or object contains a given value (using `===`).
