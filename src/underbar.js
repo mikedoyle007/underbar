@@ -253,6 +253,26 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    if (iterator === undefined) {
+      iterator = function(item) {
+        return item === true;
+      }
+    }
+    if (Array.isArray(collection)) {
+      for (var i = 0; i < collection.length; i++) {
+        if (iterator(collection[i])) {
+          return true;
+        }
+      }
+    } else {
+      // object
+      for (var prop in collection) {
+        if (iterator(collection[prop])) {
+          return true;
+        }
+      }
+    }
+    return false;
   };
 
 
