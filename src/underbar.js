@@ -168,7 +168,6 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-  	
     var reduced;
     /*******************************************************/
     // arrays
@@ -178,14 +177,12 @@
         // when accumulator is not passed in
         for (var i = 1; i < collection.length; i++) {
           accumulator = iterator(accumulator, collection[i]); 
-          console.log('current item = ' + collection[i]);
         } 
         reduced = accumulator;
      } else if (accumulator !== undefined) {
         // when accumulator is passed in  
         for (var i = 0; i < collection.length; i++) {
           accumulator = iterator(accumulator, collection[i]);
-          console.log('current item = ' + collection[i]);
         }
       }
       reduced = accumulator;
@@ -205,8 +202,6 @@
           // skip over first property in collection
           if (counter > 1) {
             accumulator = iterator(accumulator, collection[prop]);
-            console.log('prop = ' + prop);
-            console.log('current obj item = ' + collection[prop]);
           }
         }
         reduced = accumulator;
@@ -214,8 +209,6 @@
         // when accumulator is passed in
         for (var prop in collection) {
           accumulator = iterator(accumulator, collection[prop]);
-          console.log('prop = ' + prop);
-          console.log('current obj item = ' + collection[prop]);
         }
         reduced = accumulator;
       }
@@ -239,6 +232,9 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    return _.reduce(collection, function(isTrue, element) {
+      
+    }, false);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
